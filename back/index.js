@@ -1,15 +1,13 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const app = express();
+
 const cors = require("cors");
 const connectDB = require('./config/db');
-const todoModel = require("./Models/todo");
 require ("dotenv").config();
 
-
-const app = express();
 connectDB();
 app.use(cors());
-// app.use(express.json());
+app.use(express.json());
 app.use('/task', require('./Routes/Task'));
 app.use("/",(req,res) => res.send("server is running"));
 

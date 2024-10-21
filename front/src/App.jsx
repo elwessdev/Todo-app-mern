@@ -9,7 +9,11 @@ const url = import.meta.env.VITE_SERVER_URL;
 export default function App() {
   const [tasks, setTasks] = useState([]);
   const getTasks = () => {
-    axios.get(`${url}/all`)
+    axios.get(`${url}/all`, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      }
+    })
     .then(res => {
       setTasks(res.data.tasks);
       // console.log(res.data.tasks);

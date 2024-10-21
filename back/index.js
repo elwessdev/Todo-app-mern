@@ -7,11 +7,7 @@ require ("dotenv").config();
 
 
 const app = express();
-app.use(cors({
-  origin: "https://todo-app-mern-chi.vercel.app",
-  methods: ["*"],
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 connectDB();
 app.use("/test",(req,res) => res.send("server is running"));

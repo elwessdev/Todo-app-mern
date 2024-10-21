@@ -5,16 +5,12 @@ import AddTask from "./Components/AddTask/addTask"
 import axios from 'axios';
 
 const url = import.meta.env.VITE_SERVER_URL;
+axios.defaults.withCredentials = true;
 
 export default function App() {
   const [tasks, setTasks] = useState([]);
   const getTasks = () => {
-    axios.get(`${url}/all`, {
-      withCredentials: true,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      }
-    })
+    axios.get(`${url}/all`)
     .then(res => {
       setTasks(res.data.tasks);
       // console.log(res.data.tasks);

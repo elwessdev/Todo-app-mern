@@ -10,6 +10,7 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   const getTasks = () => {
     axios.get(`${url}/all`, {
+      withCredentials: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
       }

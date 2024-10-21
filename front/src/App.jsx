@@ -10,7 +10,10 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   const getTasks = () => {
     axios.get(`${url}/all`)
-    .then(res => setTasks(res.data))
+    .then(res => {
+      setTasks(res.data.tasks);
+      // console.log(res.data.tasks);
+    })
     .catch(err => {console.log(err);})
   }
   useEffect(()=>{

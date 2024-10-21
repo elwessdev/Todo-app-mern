@@ -10,7 +10,7 @@ const app = express();
 app.use(cors({
   origin: ["https://todo-app-mern-chi.vercel.app","http://localhost:5173"],
   methods: ["*"],
-  // credentials: true
+  credentials: true
 }));
 app.use(express.json());
 connectDB();
@@ -28,10 +28,18 @@ app.post("/add",(req,res)=>{
 })
 
 // get Tasks
-app.get("/all",(req,res)=>{
-  todoModel.find()
-  .then(result => res.json(result))
-  .catch(err => res.json(err))
+app.get("/all", async (req,res)=>{
+  try{
+    const AllTasks = await todoModel.find()
+    if (!AllTasks) {
+      return res.status(404).send({ message: 'Tasks not found' });
+    }
+    res.status(200).send({ tasks: AllTasks });
+  } catch(err){
+    console.error('Error fetching tasks:', err);
+    res.status(500).send({ message: 'Server error' });
+  }
+  
 })
 
 // Task Done

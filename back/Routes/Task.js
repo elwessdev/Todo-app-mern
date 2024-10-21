@@ -63,4 +63,7 @@ router.put("/edit/:id",async (req, res)=>{
     console.error('Error:', err);
     res.status(500).send({ message: 'Server error' });
   }
-})
+});
+
+
+module.exports = router;

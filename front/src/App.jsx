@@ -3,6 +3,7 @@ import "./main.scss"
 import Task from "./Components/Task/task"
 import AddTask from "./Components/AddTask/addTask"
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 const url = import.meta.env.VITE_SERVER_URL;
 axios.defaults.withCredentials = true;
@@ -19,12 +20,20 @@ export default function App() {
   }
   useEffect(()=>{
     getTasks();
-  },[])
+  },[]);
+
+  //dispatch for "dispatch" async functions from TaskSlice
+  const dispatch = useDispatch();
+  const Tasks = useSelector((state) => state.tasks.tasks); //Select tasks from initialState from TaskSlice //state.tasks (check store.ts)
+
+  const GetAllTask = () => {
+    dispatch(GetAllTask());
+  }
   return (
     <div className="todo-app">
       <h1>Todo App</h1>
       <AddTask />
-      { tasks.length
+      { Tasks.length
         ?
         <ul className="task-list">
           {tasks.map(task=><Task key={task._id} taskInfo={task}/>)}

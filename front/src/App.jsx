@@ -4,6 +4,7 @@ import Task from "./Components/Task/task"
 import AddTask from "./Components/AddTask/addTask"
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { GetAllTask } from './redux/TaskSlice';
 
 const url = import.meta.env.VITE_SERVER_URL;
 axios.defaults.withCredentials = true;
@@ -18,29 +19,30 @@ export default function App() {
     })
     .catch(err => {console.log(err);})
   }
-  useEffect(()=>{
-    getTasks();
-  },[]);
+ 
 
   //dispatch for "dispatch" async functions from TaskSlice
   const dispatch = useDispatch();
   const Tasks = useSelector((state) => state.tasks.tasks); //Select tasks from initialState from TaskSlice //state.tasks (check store.ts)
 
-  const GetAllTask = () => {
+  const GetAllTask_Dis = () => {
     dispatch(GetAllTask());
   }
+  useEffect(()=>{
+    GetAllTask_Dis();
+
+  },[]);
   return (
     <div className="todo-app">
       <h1>Todo App</h1>
       <AddTask />
-      { Tasks.length
-        ?
-        <ul className="task-list">
-          {tasks.map(task=><Task key={task._id} taskInfo={task}/>)}
-        </ul>
-        :
-        <div className='nothing'><p>Nothing yet</p></div>
-      }
+      {Tasks ? (
+            <ul className="task-list">
+                {Tasks.map((task) =><><Task key={task._id} taskInfo={task} /> </>)}
+            </ul>
+        ) : (
+            <div className='nothing'><p>Nothing yet</p></div>
+        )}
     </div>
   )
 }

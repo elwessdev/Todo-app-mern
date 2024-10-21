@@ -5,8 +5,12 @@ const cors = require("cors");
 const connectDB = require('./config/db');
 require ("dotenv").config();
 
+const corsOptions = {
+  origin: 'http://localhost:5173', // Specify the exact origin
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+};
 connectDB();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/task', require('./Routes/Task'));
 app.use("/",(req,res) => res.send("server is running"));

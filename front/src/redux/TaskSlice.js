@@ -11,20 +11,19 @@ export const AddTask = createAsyncThunk("task/add", async(task) => {
 
 export const GetAllTask = createAsyncThunk("task/all", async() => {
     try {
-        const result = await axios.get(`http://localhost:3001/task/all`, ); //change this with backend link
+        const result = await axios.get('http://localhost:3001/task/all', {
+            withCredentials: true,
+        }); //change this with backend link
+        console.log(result.data);
         return result.data;
     } catch (error) {
         console.log(error);
     }
 });
 
-export interface TaskState {
-    tasks : String[]
-}
-
-const initialState: TaskState = {
+const initialState = ({
     tasks: []
-}
+})
 
 export const TaskSlice = createSlice({
   name: 'tasks',
@@ -32,10 +31,10 @@ export const TaskSlice = createSlice({
   reducers: {
   },
   extraReducers(builder) {
-      builder
-      .addCase(GetAllTask.fulfilled, (state, action) => {
+    builder
+    .addCase(GetAllTask.fulfilled, (state, action) => {
         state.tasks = action.payload.tasks;
-      })
+    });
   },
 })
 

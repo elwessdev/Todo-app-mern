@@ -10,6 +10,7 @@ const app = express();
 app.use(cors({
   origin: ["https://todo-app-mern-chi.vercel.app","http://localhost:5173"],
   methods: ["*"],
+  // credentials: true
 }));
 app.use(express.json());
 connectDB();

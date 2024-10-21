@@ -14,7 +14,7 @@ app.use(cors({
 }));
 app.use(express.json());
 connectDB();
-app.use("/",(req,res) => res.send("server is running"));
+app.use("/test",(req,res) => res.send("server is running"));
 
 
 // Add Task

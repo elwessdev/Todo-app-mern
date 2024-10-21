@@ -6,7 +6,7 @@ const connectDB = require('./config/db');
 require ("dotenv").config();
 
 const corsOptions = {
-  origin: 'https://todo-app-mern-chi.vercel.app/', // Specify the exact origin
+  origin: 'https://todo-app-mern-chi.vercel.app', // Specify the exact origin
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 connectDB();

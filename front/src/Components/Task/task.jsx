@@ -3,7 +3,6 @@ import "./style.scss"
 import { AiFillCheckCircle } from "react-icons/ai";
 import { BsCircleFill } from "react-icons/bs";
 import { useState } from "react";
-
 const url = import.meta.env.VITE_SERVER_URL;
 
 const Task = ({taskInfo}) => {

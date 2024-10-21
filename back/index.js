@@ -8,12 +8,13 @@ require ("dotenv").config();
 
 const app = express();
 app.use(cors({
-  origin: ["https://todo-app-mern-chi.vercel.app"],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+  origin: ["https://todo-app-mern-chi.vercel.app","http://localhost:5173"],
+  methods: ["*"],
 }));
 app.use(express.json());
 connectDB();
+app.use("/",(req,res) => res.send("server is running"));
+
 
 // Add Task
 app.post("/add",(req,res)=>{

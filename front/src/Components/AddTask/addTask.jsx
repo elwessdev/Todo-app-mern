@@ -2,17 +2,18 @@ import "./style.scss"
 import { useState } from 'react'
 import axios from 'axios';
 
-const url = import.meta.env.VITE_SERVER_URL;
 
 const AddTask = () => {
-  const [task, setTask] = useState([]);
+  const [task, setTask] = useState();
   const addTask = () => {
-    axios.post(`${url}/add`,{task: task})
-    .then(res => {
-      location.reload();
-      console.log(res);
-    })
-    .catch(err => {console.log(err);})
+    if(task){
+      axios.post(`${import.meta.env.VITE_SERVER_URL}/add`,{task: task})
+      .then(res => {
+        location.reload();
+        console.log(res);
+      })
+      .catch(err => {console.log(err);})
+    }
   }
   return (
     <div className="input-container">

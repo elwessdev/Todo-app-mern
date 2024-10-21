@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
 export default function App() {
   const [tasks, setTasks] = useState([]);
   const getTasks = () => {
-    axios.get(`${url}/all`)
+    axios.get(`${url}/task/all`)
     .then(res => {
       setTasks(res.data.tasks);
       // console.log(res.data.tasks);

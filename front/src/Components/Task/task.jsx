@@ -9,7 +9,7 @@ const Task = ({taskInfo}) => {
   const [edit, setEdit] = useState(false)
   const [taskContent, setTaskConten] = useState(taskInfo.task)
   const isDone = (id) => {
-    axios.put(`${url}/done/${id}`)
+    axios.put(`${url}/task/done/${id}`)
     .then(res => {
       location.reload();
       console.log(res);
@@ -17,7 +17,7 @@ const Task = ({taskInfo}) => {
     .catch(err => {console.log(err);})
   }
   const deleteTask = (id) => {
-    axios.delete(`${url}/delete/${id}`)
+    axios.delete(`${url}/task/delete/${id}`)
     .then(res=>{
       location.reload();
       console.log(res);
@@ -26,7 +26,7 @@ const Task = ({taskInfo}) => {
   }
   const editTask = (id) => {
     if(taskContent!=taskInfo.task){
-      axios.put(`${url}/edit/${id}`,{content: taskContent})
+      axios.put(`${url}/task/edit/${id}`,{content: taskContent})
       .then(response => {
         // location.reload();
         console.log(response);

@@ -1,25 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import "./main.scss"
 import Task from "./Components/Task/task"
 import AddTask from "./Components/AddTask/addTask"
-import axios from 'axios';
+// import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetAllTask } from './redux/TaskSlice';
 
-const url = import.meta.env.VITE_SERVER_URL;
-axios.defaults.withCredentials = true;
+// const url = import.meta.env.VITE_SERVER_URL;
+// axios.defaults.withCredentials = true;
 
 export default function App() {
-  const [tasks, setTasks] = useState([]);
-  const getTasks = () => {
-    axios.get(`${url}/task/all`)
-    .then(res => {
-      setTasks(res.data.tasks);
-      // console.log(res.data.tasks);
-    })
-    .catch(err => {console.log(err);})
-  }
- 
+  // const [tasks, setTasks] = useState([]);
+  // const getTasks = () => {
+  //   axios.get(`${url}/task/all`)
+  //   .then(res => {
+  //     setTasks(res.data.tasks);
+  //     // console.log(res.data.tasks);
+  //   })
+  //   .catch(err => {console.log(err);})
+  // }
 
   //dispatch for "dispatch" async functions from TaskSlice
   const dispatch = useDispatch();
@@ -30,7 +29,6 @@ export default function App() {
   }
   useEffect(()=>{
     GetAllTask_Dis();
-
   },[]);
   return (
     <div className="todo-app">

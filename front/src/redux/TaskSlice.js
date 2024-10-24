@@ -1,21 +1,28 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 
-export const AddTask = createAsyncThunk("task/add", async(task) => {
+const BackURL = import.meta.env.VITE_SERVER_URL;
+
+export const GetAllTask = createAsyncThunk("task/all", async() => {
     try {
-        const result = await axios.post(`https://todo-app-mern-server.vercel.app/task/add`, task); //change this with backend link
+        const result = await axios.get(`${BackURL}/task/all`, {
+            withCredentials: true,
+        });
+        console.log(result.data);
+        return result.data;
     } catch (error) {
         console.log(error);
     }
 });
 
-export const GetAllTask = createAsyncThunk("task/all", async() => {
+export const AddNewTask = createAsyncThunk("task/add", async(task) => {
     try {
-        const result = await axios.get('https://todo-app-mern-server.vercel.app/task/all', {
-            withCredentials: true,
-        }); //change this with backend link
-        console.log(result.data);
-        return result.data;
+        const t = await fetch(`${BackURL}/task/add`,{
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ newT: task})
+        })
+        console.log(t.status);
     } catch (error) {
         console.log(error);
     }
@@ -39,6 +46,6 @@ export const TaskSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { } = TaskSlice.actions
+export const {} = TaskSlice.actions
 
 export default TaskSlice.reducer

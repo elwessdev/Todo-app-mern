@@ -1,39 +1,40 @@
-import axios from "axios";
 import "./style.scss"
+import { useState } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { BsCircleFill } from "react-icons/bs";
-import { useState } from "react";
-const url = import.meta.env.VITE_SERVER_URL;
+import { useDispatch } from 'react-redux';
+import { DeleteTask, EditTask, TaskStatus } from '../../redux/TaskSlice';
 
 const Task = ({taskInfo}) => {
-  const [edit, setEdit] = useState(false)
-  const [taskContent, setTaskConten] = useState(taskInfo.task)
-  const isDone = (id) => {
-    axios.put(`${url}/task/done/${id}`)
-    .then(res => {
-      location.reload();
-      console.log(res);
-    })
-    .catch(err => {console.log(err);})
+  const dispatch = useDispatch();
+  const [edit, setEdit] = useState(false);
+  const [taskContent, setTaskConten] = useState(taskInfo.task);
+
+  const status = (id,status) => {
+    dispatch(TaskStatus({
+      id:id,
+      status:status
+    }))
+    .unwrap()
+    .then(res=>{ console.log("Update status: ",res); })
+    .catch((error) => { console.error("Failed to update task:", error); });
+    location.reload();
   }
   const deleteTask = (id) => {
-    axios.delete(`${url}/task/delete/${id}`)
-    .then(res=>{
-      location.reload();
-      console.log(res);
-    })
-    .catch(err=>{console.log(err);})
+    dispatch(DeleteTask(id));
+    location.reload();
   }
   const editTask = (id) => {
-    if(taskContent!=taskInfo.task){
-      axios.put(`${url}/task/edit/${id}`,{content: taskContent})
-      .then(response => {
-        // location.reload();
-        console.log(response);
+    if(edit!=taskContent){
+      console.log(id,taskContent);
+      dispatch(EditTask({id: id, task: taskContent}))
+      .unwrap()
+      .then((response) => {
+        console.log("Task successfully updated:", response);
+        setEdit(false);
       })
-      .catch(err => {console.log(err);})
+      .catch((error) => { console.error("Failed to update task:", error);});
     }
-    setEdit(false)
   }
   return (
     <li>
@@ -44,7 +45,7 @@ const Task = ({taskInfo}) => {
           <button onClick={e=>editTask(taskInfo._id)}>save</button>
         </div>
         :
-        <div className="content" onClick={e=>isDone(taskInfo._id)}>
+        <div className="content" onClick={e=>status(taskInfo._id, !taskInfo.isDone)}>
           {taskInfo.isDone ?<AiFillCheckCircle /> :<BsCircleFill />}
           <span className={taskInfo.isDone ?'completed' :''} >{taskContent}</span>
       </div>

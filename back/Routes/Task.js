@@ -28,18 +28,6 @@ router.post("/add",async (req, res)=>{
   }
 })
 
-// Task Done
-router.put("/done/:id",async (req, res)=>{
-  const {id} = req.params;
-  try{
-    const change = await todoModel.findByIdAndUpdate({_id: id}, {isDone: true})
-    res.status(200).send({ change });
-  } catch(err){
-    console.error('Error:', err);
-    res.status(500).send({ message: 'Server error' });
-  }
-})
-
 // Delete Task
 router.delete("/delete/:id",async (req, res)=>{
   const {id} = req.params;
@@ -53,11 +41,13 @@ router.delete("/delete/:id",async (req, res)=>{
 })
 
 // Edit Task
-router.put("/edit/:id",async (req, res)=>{
-  const {id} = req.params;
+router.put("/edit/:id", async(req, res)=>{
+  console.log(req.params.id, req.body.content);
   try{
-    const newContent = req.body.content;
-    const change = todoModel.findByIdAndUpdate({_id: id},{task: newContent})
+    const change = await todoModel.findByIdAndUpdate(
+      { _id: req.params.id },
+      { task: req.body.content }
+    );
     res.status(200).send({ change });
   } catch(err){
     console.error('Error:', err);
@@ -65,5 +55,18 @@ router.put("/edit/:id",async (req, res)=>{
   }
 });
 
+// Task status
+router.put("/status/:id",async (req, res)=>{
+  try{
+    const change = await todoModel.findByIdAndUpdate(
+      {_id: req.params.id},
+      {isDone: req.body.status}
+    )
+    res.status(200).send({ change });
+  } catch(err){
+    console.error('Error:', err);
+    res.status(500).send({ message: 'Server error' });
+  }
+})
 
 module.exports = router;

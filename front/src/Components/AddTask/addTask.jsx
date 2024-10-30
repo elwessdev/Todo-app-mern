@@ -7,22 +7,12 @@ import { AddNewTask } from '../../redux/TaskSlice';
 
 const AddTask = () => {
   const [task, setTask] = useState();
-  // const addTask = () => {
-  //   if(task){
-  //     axios.post(`${import.meta.env.VITE_SERVER_URL}/add`,{task: task})
-  //     .then(res => {
-  //       location.reload();
-  //       console.log(res);
-  //     })
-  //     .catch(err => {console.log(err);})
-  //   }
-  // }
   const dispatch = useDispatch();
   const addTask = () => {
     if(task){
-      console.log("addJS",task);
+      console.log("add front: ",task);
       dispatch(AddNewTask(task))
-      // location.reload();
+      location.reload();
     }
   }
 
